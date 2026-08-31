@@ -148,3 +148,97 @@ curl http://localhost:3000/auth/me \
 ## Important production improvements
 
 This is intentionally a learning project. A production system should additionally use strict input validation, rate limiting, refresh-token rotation or another session strategy, secret management, structured logging, auditing, stronger error handling, and HTTPS at the edge.
+
+
+
+Yes. Since this project uses **Node.js + TypeScript + PostgreSQL + Redis + Docker**, the easiest way to run it in VS Code is:
+
+### 1. Open the project
+
+Extract the ZIP and open the folder in VS Code.
+
+Open **Terminal → New Terminal**, then:
+
+```bash
+cd simple-login-project
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Create `.env`
+
+Copy `.env.example` to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+On Windows PowerShell:
+
+```powershell
+copy .env.example .env
+```
+
+### 4. Start PostgreSQL + Redis
+
+Because the project includes `docker-compose.yml`:
+
+```bash
+docker compose up -d
+```
+
+Check that containers are running:
+
+```bash
+docker compose ps
+```
+
+### 5. Start the backend
+
+```bash
+npm run dev
+```
+
+You should see something similar to:
+
+```text
+Server running on http://localhost:3000
+```
+
+### 6. Test the API
+
+Register a user:
+
+```bash
+curl -X POST http://localhost:3000/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"Password123"}'
+```
+
+Then login:
+
+```bash
+curl -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"Password123"}'
+```
+
+### The main command
+
+Once everything is installed and Docker is running, your normal development command is simply:
+
+```bash
+npm run dev
+```
+
+When you're finished:
+
+```bash
+docker compose down
+```
+
+If you are using **Windows**, **Mac**, or **Linux**, I can also give you the exact VS Code setup and commands for your operating system.
